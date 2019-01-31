@@ -1,5 +1,6 @@
 #include "anna.h"
 #include "daemon.h"
+#include "servers.h"
 
 using namespace Cutelyst;
 
@@ -17,6 +18,7 @@ Anna::~Anna()
 bool Anna::init()
 {
     new Daemon(this);
+    new Servers(this);
     return true;
 }
 

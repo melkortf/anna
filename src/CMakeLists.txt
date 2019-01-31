@@ -7,14 +7,18 @@ set (CMAKE_INCLUDE_CURRENT_DIR ON)
 set (anna_HEADERS
     anna.h
     daemon.h
+    servers.h
 )
 
 set (anna_SOURCES
     anna.cpp
     daemon.cpp
+    servers.cpp
 )
 
 qt5_add_dbus_interface (anna_SOURCES dbus/org.morgoth.Daemon.xml daemoninterface)
+qt5_add_dbus_interface (anna_SOURCES dbus/org.morgoth.ServerManager.xml servermanagerinterface)
+qt5_add_dbus_interface (anna_SOURCES dbus/org.morgoth.Server.xml serverinterface)
 
 add_library (anna SHARED
     ${anna_HEADERS}
