@@ -1,0 +1,19 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.morgoth.ServerCoordinator">
+    <method name="start">
+        <arg type="b" direction="out"/>
+    </method>
+    <method name="stop">
+    </method>
+    <property name="state" type="(s)" access="read">
+        <annotation name="org.qtproject.QtDBus.QtTypeName" value="morgoth::ServerCoordinator::State"/>
+    </property>
+    <signal name="stateChanged">
+        <arg name="state" type="(s)" direction="out"/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="morgoth::ServerCoordinator::State"/>
+    </signal>
+    <method name="flushLogs">
+    </method>
+  </interface>
+</node>

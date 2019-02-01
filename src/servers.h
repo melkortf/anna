@@ -16,6 +16,12 @@ public:
     C_ATTR(index_GET, :Private)
     void index_GET(Cutelyst::Context* c);
 
+    C_ATTR(server_name, :Chained("/") :PathPart("servers") :AutoArgs :ActionClass(REST))
+    void server_name(Cutelyst::Context* c, const QString& serverName);
+
+    C_ATTR(server_name_GET, :Private)
+    void server_name_GET(Cutelyst::Context* c, const QString& serverName);
+
 };
 
 #endif //SERVERS_H
