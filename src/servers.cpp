@@ -33,14 +33,24 @@ QJsonObject fetchServer(const org::morgoth::Server& server)
 {
     org::morgoth::ServerCoordinator coordinator("org.morgoth", server.coordinatorPath().path(), Anna::dbusConnection());
 
-    QJsonObject statusJson;
+    auto ret = QJsonObject{
+        { QStringLiteral("name"), server.name() },
+        { QStringLiteral("state"), stateToString(coordinator.state()) }
+    };
+
     if (coordinator.state() == morgoth::ServerCoordinator::Running) {
+        QJsonObject statusJson;
         org::morgoth::ServerStatus status("org.morgoth", server.statusPath().path(), Anna::dbusConnection());
         statusJson["hostname"] = status.hostname();
         statusJson["map"] = status.map();
         statusJson["maxPlayers"] = status.maxPlayers();
         statusJson["playerCount"] = status.playerCount();
         statusJson["address"] = status.address();
+        statusJson["passwordProtected"] = !status.password().isEmpty();
+        statusJson["sourceTv"] = QJsonObject{
+            { "port", status.stvPort() },
+            { "password", status.stvPassword() }
+        };
 
         QJsonArray playersJson;
         auto players = status.players();
@@ -52,13 +62,10 @@ QJsonObject fetchServer(const org::morgoth::Server& server)
         }
 
         statusJson["players"] = playersJson;
+        ret["status"] = statusJson;
     }
 
-    return QJsonObject{
-        { QStringLiteral("name"), server.name() },
-        { QStringLiteral("state"), stateToString(coordinator.state()) },
-        { QStringLiteral("status"), statusJson }
-    };
+    return ret;
 }
 
 }
