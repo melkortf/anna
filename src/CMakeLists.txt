@@ -36,6 +36,7 @@ add_library (anna SHARED
 
 target_link_libraries (anna
     Cutelyst::Core
+    Cutelyst::CSRFProtection
     Qt5::Core
     Qt5::DBus
     Qt5::Network
